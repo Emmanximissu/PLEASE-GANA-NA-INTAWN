@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number System Converter</title>
+    
+    <style>
+        /* Reset default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e1e2f, #343454);
+    color: #eaeaea;
+    line-height: 1.8;
+    min-height: 100vh;
+    padding-top: 80px; /* Add padding for fixed header */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Header Style */
+header {
+    background: #2c2c3d;
+    padding: 20px 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-size: 28px;
+    color: #e0aaff;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+header nav {
+    display: flex;
+    gap: 20px;
+}
+
+header nav a {
+    color: #d1d1e9;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+header nav a:hover {
+    background: #e0aaff;
+    color: #2a2a44;
+    transform: scale(1.1);
+    font-weight: 600;
+}
+
+/* Footer Style */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 30px;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #4C9B9F;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Main Container */
+.converter-container {
+    max-width: 500px; /* Increased container width */
+    margin: 80px auto;
+    background: #28283e;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    padding: 40px 50px; /* Increased padding */
+    text-align: center;
+    /* Removed overflow-y to prevent scroll */
+    height: auto; /* Let it adjust to content */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: whitesmoke;
+}
+
+select, input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+select {
+    background-color: #eaf4f4;
+}
+
+input:focus, select:focus {
+    border-color: #4C9B9F;
+    outline: none;
+    background-color: #fff;
+}
+
+/* Result Box */
+.result {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.result p {
+    margin-bottom: 12px;
+}
+
+.result p strong {
+    color: #4C9B9F;
+}
+
+/* Buttons and hover effects */
+button {
+    background-color: #4C9B9F;
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3c8c8f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .converter-container {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .converter-container {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .result {
+        font-size: 1rem;
+    }
+}
+
+    </style>
+
+</head>
+<body>
+
+<header>
+    <h1>Number System Converter</h1>
+    <nav>
+        <a href="FINAL TASK.HTML">Home Page</a>
+        <a href="Introduction.html">Introduction to Number System</a>
+    </nav>
+</header>
+
+<div class="converter-container">
+    <label for="number-system">Choose the number system:</label>
+    <select id="number-system">
+        <option value="decimal">Decimal</option>
+        <option value="binary">Binary</option>
+        <option value="octal">Octal</option>
+        <option value="hexadecimal">Hexadecimal</option>
+    </select>
+
+    <label for="input-number">Enter the number:</label>
+    <input type="text" id="input-number" placeholder="Enter a number" />
+
+    <div class="result" id="result"></div>
+</div>
+
+<footer>
+    &copy; 2024 Number System Converter | <a href="https://www.example.com" target="_blank">Learn More</a>
+</footer>
+
+<script>
+    function convertNumber() {
+        const numberSystem = document.getElementById('number-system').value;
+        const inputNumber = document.getElementById('input-number').value.trim();
+        let result = '';
+
+        if (inputNumber === '') {
+            result = 'Please enter a valid number.';
+        } else {
+            let decimal;
+
+            // Convert input to decimal
+            if (numberSystem === 'decimal') {
+                decimal = parseInt(inputNumber, 10);
+            } else if (numberSystem === 'binary') {
+                decimal = parseInt(inputNumber, 2);
+            } else if (numberSystem === 'octal') {
+                decimal = parseInt(inputNumber, 8);
+            } else if (numberSystem === 'hexadecimal') {
+                decimal = parseInt(inputNumber, 16);
+            }
+
+            // Check if it's a valid number
+            if (isNaN(decimal)) {
+                result = 'Invalid number for the selected system.';
+            } else {
+                // Convert decimal to other systems
+                const binary = decimal.toString(2);
+                const octal = decimal.toString(8);
+                const hexadecimal = decimal.toString(16).toUpperCase();
+
+                // Display all conversions
+                result = `
+                    <p><strong>Decimal:</strong> ${decimal}</p>
+                    <p><strong>Binary:</strong> ${binary}</p>
+                    <p><strong>Octal:</strong> ${octal}</p>
+                    <p><strong>Hexadecimal:</strong> ${hexadecimal}</p>
+                `;
+            }
+        }
+
+        document.getElementById('result').innerHTML = result;
+    }
+
+    // Attach the convertNumber function to both the input and select events
+    document.getElementById('input-number').addEventListener('input', convertNumber);
+    document.getElementById('number-system').addEventListener('change', convertNumber);
+</script>
+
+</body>
+</html>
